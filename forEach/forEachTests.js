@@ -33,20 +33,47 @@ console.log(myArray); //[1,2,3]
 })*/ 
 //[0`]= 1 | [1`]= 2 | [2`]= 3
 
+/*forEach([1,2,3], function() {
+    console.log(this.greeting);
+}, {greeting: 'BOO!'})*/
+//BOO | BOO | BOO
 
 /*--- TESTS ---*/
+
+//Test 1
 var counter = 0;
 forEach([1,2,3], function(){
     counter++;
 });
-if(counter !== 3) { 
-    throw new Error('TEST FAILED: callback function should be run array.length times');
-}
+if(counter !== 3) { throw new Error('TEST FAILED: callback function should be run array.length times'); }
 
-throw new Error('TEST FAILED: ith element should be passed in as first arg to callback function');
-throw new Error('TEST FAILED: ith position should be passed in as second arg to callback function');
-throw new Error('TEST FAILED: original array should be passed in as third arg to callback function');
-throw new Error('TEST FAILED: should accept an optional this object');
+//Test 2
+forEach([1], function(element){
+    if(element !== 1) { throw new Error('TEST FAILED: ith element should be passed in as first arg to callback function'); }
+})
+
+//Test 3
+forEach([1], function(element, index) {
+    if(index !== 0) { throw new Error('TEST FAILED: ith position should be passed in as second arg to callback function'); }
+})
+
+//Test 4
+var testArray = [77, 88, 99];
+forEach(testArray, function(element, index, originalArray) {
+    if(originalArray != testArray) { 
+        throw new Error('TEST FAILED: original array should be passed in as third arg to callback function');
+    }
+})
+
+//Test 5
+var someObject = { greeting: "Greetings from inside someObject"}
+forEach([1], function(){
+    //console.log(this.greeting);
+    if(this.greeting !== someObject.greeting) { 
+        throw new Error('TEST FAILED: forEach() function should accept an optional this object');
+    }
+}, someObject);
+
 
 
 
