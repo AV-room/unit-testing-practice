@@ -1,17 +1,18 @@
 //using a test-driven development approach to write a forEach() function from scratch
 //tests are written in vanilla JS
 
+/*--- EXAMPLES ---*/
+
 //native JS forEach()
-var myArray = [1,2,3];
+/* var myArray = [1,2,3];
 myArray.forEach(function(current){
    console.log(current*2);
 }) //2 4 6
 
-console.log(myArray); //[1,2,3]
+console.log(myArray); //[1,2,3] */
 
 
-/*--- EXAMPLES ---*/
-//i.e. how we'd like our from-scratch forEach() to work
+//how we'd like our from-scratch forEach() to work
 
 /*forEach([1,2,3], function(){
     console.log('HEY!');
@@ -22,6 +23,7 @@ console.log(myArray); //[1,2,3]
     console.log(element);
 })*/ 
 // 1 | 2 | 3
+
 
 /*forEach([1,2,3], function(element, index){
     console.log('[' + index + ']= ' + element + ' ');
@@ -37,6 +39,7 @@ console.log(myArray); //[1,2,3]
     console.log(this.greeting);
 }, {greeting: 'BOO!'})*/
 //BOO | BOO | BOO
+
 
 /*--- TESTS ---*/
 
@@ -75,5 +78,8 @@ forEach([1], function(){
 }, someObject);
 
 
-
-
+function forEach(array, callbackFunction) {
+    for(var i=0; i<array.length; i++) {
+        callbackFunction(array[i], i, array);
+    }
+}
