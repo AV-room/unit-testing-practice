@@ -9,8 +9,10 @@ myArray.forEach(function(current){
 
 console.log(myArray); //[1,2,3]
 
-//EXAMPLES 
+
+/*--- EXAMPLES ---*/
 //i.e. how we'd like our from-scratch forEach() to work
+
 /*forEach([1,2,3], function(){
     console.log('HEY!');
 })*/ 
@@ -28,10 +30,23 @@ console.log(myArray); //[1,2,3]
 
 /*forEach([1,2,3], function(element, index, array){
     console.log('[' + index + '`]= ' + array[index] + ' ');
-}) */
-// [0`]= 1 | [1`]= 2 | [2`]= 3
+})*/ 
+//[0`]= 1 | [1`]= 2 | [2`]= 3
 
 
+/*--- TESTS ---*/
+var counter = 0;
+forEach([1,2,3], function(){
+    counter++;
+});
+if(counter !== 3) { 
+    throw new Error('TEST FAILED: callback function should be run array.length times');
+}
+
+throw new Error('TEST FAILED: ith element should be passed in as first arg to callback function');
+throw new Error('TEST FAILED: ith position should be passed in as second arg to callback function');
+throw new Error('TEST FAILED: original array should be passed in as third arg to callback function');
+throw new Error('TEST FAILED: should accept an optional this object');
 
 
 
