@@ -2,4 +2,6 @@
 //tests are written using tinytest.js (https://github.com/joewalnes/jstinytest)
 
 /*--- CODE TO TEST---*/
-console.log('greetings from inside myFilterFunc.js');
+function filter() {
+    console.log('inside filter()');
+}
