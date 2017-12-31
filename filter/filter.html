@@ -32,12 +32,10 @@
             })*/
             // [2,3]
             
+            
+            
             /*--- TESTS ---*/
             tests({
-//                'simple test': function() {
-//                    filter();
-//                    fail();
-//                },
                 'the callback function should be run array.length times': function() {
                     var counter = 0;
                 
@@ -58,8 +56,10 @@
                     })    
                 },
                 'original array should be passed in as third arg to callback function': function() {
-                    filter([1], function(element, index, originalArray) {
-                        assertEquals([1], arguments[2]);
+                    var arrayToFilter = [1,2];
+                    
+                    filter(arrayToFilter, function(element, index, originalArray) {
+                        assertEquals(arrayToFilter, arguments[2]);
                     })    
                 },
                 'filter() should accept an optional this object to be used in the context of the callback function': function() {
@@ -73,8 +73,8 @@
                     var result = filter([1], function() {
                         return true;
                     });
-                    
-                    assert(result.isArray, "filter() result is not an array ")
+            
+                    assertEquals(true, Array.isArray(result));
                 },
                 'a call to filter() should return a new array, not the original array passed into the function': function() {
                     var originalArray = [1];
@@ -82,16 +82,16 @@
                         return true;
                     });
                     
-                    assertEquals(false, filteredArray !== originalArray);
+                    assertEquals(true, filteredArray !== originalArray);
                 },
                 'a call to filter() should return a new array, which only holds elements that return true when passed into the callback function': function() {
-                    var originalArray = [1,2,3];
-                    
-                    var filteredArray = filter(originalArray, function(element) {
+                    var filteredArray = filter([1,2], function(element) {
                         return (element > 1);
                     });
                     
-                    assertEquals([2,3], filteredArray);
+                    //filtered array should be [2]
+                    assertEquals(1, filteredArray.length);
+                    assertEquals(2, filteredArray[0]);
                 }
             });
             
