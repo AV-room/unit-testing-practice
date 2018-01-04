@@ -44,10 +44,6 @@ const map = require('./map');
 
 
 /*--- TESTS ---*/
-test('', () => {
-    expect(map()).toBe('inside map()');
-})
-
 test('the callback function should be run array.length times', () => {
     
     let counter = 0;
@@ -70,7 +66,7 @@ test('the ith element should be passed in as first arg to callback function', ()
 test('the ith position should be passed in as second arg to callback function', () => {
     
     map([1], function(element, index) {
-        expect(arguments[1].toBe(0));
+        expect(arguments[1]).toBe(0);
     });
     
 });
@@ -78,7 +74,7 @@ test('the ith position should be passed in as second arg to callback function', 
 test('the original array should be passed in as third arg to callback function', () => {
     
     map([1], function(element, index, array) {
-        expect(arguments[2].toEqual([1]));
+        expect(arguments[2]).toEqual([1]);
     });
     
 });
