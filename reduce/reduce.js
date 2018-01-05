@@ -10,10 +10,19 @@
 //    return resultSoFar;
 //}
 
-function reduce(array, callback, startingValue) {
+function reduce(array, callback, initialValue) {
     
-    for(let i=0; i<array.length; i++) {
-        callback();
+    let startingIndex = 0;
+    let resultSoFar = initialValue;
+    
+    //in this case, no startingValue has been provided
+    if(arguments.length < 3) {
+        startingIndex = 1;
+        resultSoFar = array[0];
+    }
+    
+    for(let i=startingIndex; i<array.length; i++) {
+        callback(resultSoFar, array[i], i, array);
     }
 
 }
