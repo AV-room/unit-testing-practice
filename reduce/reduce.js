@@ -44,6 +44,8 @@ function reduce(array, callback, initialValue) {
         }
     }
     
+    //fixing array.length at the beginning is recommended
+    // in case your callback modifies the original array
     for(let i=startingIndex; i<array.length; i++) {
         //check that this index is actually defined in the array
         if(i in array) {
