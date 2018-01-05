@@ -17,13 +17,24 @@ function reduce(array, callback, initialValue) {
     
     //in this case, no startingValue has been provided
     if(arguments.length < 3) {
-        startingIndex = 1;
-        resultSoFar = array[0];
+        
+        //check if array is empty
+        if(Object.keys(array).length === 0) {
+            throw new TypeError;
+        }
         
         if(Object.keys(array).length === 1) {
             const loneIndex = Object.keys(array)[0]; //first defined element in array
             return array[loneIndex];
         }
+        
+        //we want to skip holes at the beginning of the array
+        while(startingIndex in array === false && startingIndex < array.length) {
+            startingIndex++;
+        }
+        
+        resultSoFar = array[startingIndex];
+        startingIndex++;
     } 
     //startingValue has been provided
     else {
@@ -34,7 +45,10 @@ function reduce(array, callback, initialValue) {
     }
     
     for(let i=startingIndex; i<array.length; i++) {
-        resultSoFar = callback(resultSoFar, array[i], i, array);
+        //check that this index is actually defined in the array
+        if(i in array) {
+            resultSoFar = callback(resultSoFar, array[i], i, array);
+        }
     }
     
     return resultSoFar;

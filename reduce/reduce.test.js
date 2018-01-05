@@ -33,11 +33,6 @@ test('original array is passed in as fourth arg to callback function', () => {
     })
 });
 
-//test callback called for each assigned index in array
-test('callback function should be called for each assigned index in the original array', () => {
-    fail();
-});
-
 //test initialValue arg present => accumulator starts with initialVal, currentVal starts with array[0], 
 //                                  callback starts at index 0, callback runs array.length times
 test('if initialValue has been provided, previousValue should be initialised to initialValue', () => {
@@ -108,8 +103,20 @@ test('a call to reduce() returns the reduced value', () => {
 });
 
 //callback should not run on holes in the array
-test('the callback function should not run on holes in the array', () => {
-    fail();
+test('if initialValue has been provided, the callback function should not run on holes in the array', () => {
+     const result = reduce([,1,2,,,3,], (previousValue, currentValue) => {
+        return previousValue + currentValue;
+    }, 10);
+    
+    expect(result).toBe(16);
+});
+
+test('if initialValue has not been provided, the callback function should not run on holes in the array', () => {
+     const result = reduce([,1,2,,,3,], (previousValue, currentValue) => {
+        return previousValue + currentValue;
+    });
+    
+    expect(result).toBe(6);
 });
 
 //array empty, initialValue arg present => return initialValue without calling callback
@@ -127,7 +134,15 @@ test('if the array is empty and an initialValue has been provided, the initialVa
 
 //array empty, no initialValue arg present => TypeError thrown
 test('if the array is empty and no initialValue has been provided, a TypeError should be thrown', () => {
-    fail();
+    let isTypeError = false;
+    
+    try {
+        reduce([], () => {});
+    } catch(e) {
+        isTypeError = (e instanceof TypeError);    
+    }
+    
+    expect(isTypeError).toBeTruthy();
 });
 
 //array has one element (regardless of position), no initialValue arg present => return solo element without calling callback
@@ -141,7 +156,6 @@ test('if the array only has one element in total, and no initialValue has been p
     expect(result).toBe(1);
     expect(counter).toBe(0);
 });
-//reduce([1]) => 1
 
 //array has one element (regardless of position), no initialValue arg present => return solo element without calling callback
 test('if the array only has one assigned index, and no initialValue has been provided, that element should be returned without calling the callback function', () => {
@@ -154,4 +168,3 @@ test('if the array only has one assigned index, and no initialValue has been pro
     expect(result).toBe(1);
     expect(counter).toBe(0);
 });
-//reduce([,1]) => 1
