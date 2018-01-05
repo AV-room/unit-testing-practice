@@ -19,11 +19,25 @@ function reduce(array, callback, initialValue) {
     if(arguments.length < 3) {
         startingIndex = 1;
         resultSoFar = array[0];
+        
+        if(Object.keys(array).length === 1) {
+            const loneIndex = Object.keys(array)[0]; //first defined element in array
+            return array[loneIndex];
+        }
+    } 
+    //startingValue has been provided
+    else {
+         //check if array is empty
+        if(Object.keys(array).length === 0) {
+            return initialValue;
+        }
     }
     
     for(let i=startingIndex; i<array.length; i++) {
-        callback(resultSoFar, array[i], i, array);
+        resultSoFar = callback(resultSoFar, array[i], i, array);
     }
+    
+    return resultSoFar;
 
 }
 

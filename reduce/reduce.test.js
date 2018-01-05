@@ -71,17 +71,21 @@ test('if initialValue has been provided, the callback function should be called 
 //test initialValue arg not present => accumulator starts with array[0], currentVal starts with array[1], 
 //                                      callback starts at index 1, callback runs (array.length-1) times 
 test('if initialValue has not been provided, previousValue should be initialised to array[0]', () => {
-    reduce([1,2,3], (previousValue) => {
+    reduce([1,2], (previousValue) => {
         expect(previousValue).toBe(1);
     })
 });
 
 test('if initialValue has not been provided, currentValue should be initialised to array[1]', () => {
-    fail();
+    reduce([1,2], (previousValue, currentValue) => {
+        expect(currentValue).toBe(2);
+    });
 });
 
 test('if initialValue has not been provided, the callback function should be first called on array[1]', () => {
-    fail();
+    reduce([1,2], (previousValue, currentValue, currentIndex) => {
+       expect(currentIndex).toBe(1); 
+    });
 });
 
 test('if initialValue has not been provided, the callback function should run (array.length-1) times', () => {
@@ -96,7 +100,11 @@ test('if initialValue has not been provided, the callback function should run (a
 
 //test reduced value returned (happy path)
 test('a call to reduce() returns the reduced value', () => {
-    fail();
+    const result = reduce([1,2,3], (previousValue, currentValue) => {
+        return previousValue + currentValue;
+    }, 10);
+    
+    expect(result).toBe(16);
 });
 
 //callback should not run on holes in the array
@@ -106,7 +114,15 @@ test('the callback function should not run on holes in the array', () => {
 
 //array empty, initialValue arg present => return initialValue without calling callback
 test('if the array is empty and an initialValue has been provided, the initialValue should be returned without calling the callback', () => {
-    fail();
+    const initialValue = 10;
+    let counter = 0;
+    
+    const result = reduce([,,], () => {
+        counter++;
+    }, initialValue);
+    
+    expect(result).toBe(initialValue);
+    expect(counter).toBe(0);
 });
 
 //array empty, no initialValue arg present => TypeError thrown
@@ -116,12 +132,26 @@ test('if the array is empty and no initialValue has been provided, a TypeError s
 
 //array has one element (regardless of position), no initialValue arg present => return solo element without calling callback
 test('if the array only has one element in total, and no initialValue has been provided, that element should be returned without calling the callback function', () => {
-    fail();
+    let counter = 0;
+    
+    const result = reduce([1], () => {
+       counter++; 
+    });
+    
+    expect(result).toBe(1);
+    expect(counter).toBe(0);
 });
 //reduce([1]) => 1
 
 //array has one element (regardless of position), no initialValue arg present => return solo element without calling callback
 test('if the array only has one assigned index, and no initialValue has been provided, that element should be returned without calling the callback function', () => {
-    fail();
+    let counter = 0;
+    
+    const result = reduce([,,1,], () => {
+       counter++; 
+    });
+    
+    expect(result).toBe(1);
+    expect(counter).toBe(0);
 });
 //reduce([,1]) => 1
